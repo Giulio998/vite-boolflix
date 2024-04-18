@@ -1,6 +1,7 @@
 <script>
 import axios from "axios"
 import { store } from "../../store.js"
+
 export default {
   props: {
     title: String,
@@ -20,7 +21,8 @@ export default {
       store,
       hovered: false,
       limit: 5,
-      madeCastCallTrueFalse: 0
+      madeCastCallTrueFalse: 0,
+      
     }
   },
   computed: {
@@ -39,11 +41,10 @@ export default {
     truncate(str, maxlength) {
       return (str.length > maxlength) ? str.slice(0, maxlength - 1) + '…' : str;
     },
-
     getCast(id, type) {
-
-      id = this.id
-      type = this.type
+      id= this.id;
+      type= this.type;
+      
       if (this.madeCastCallTrueFalse == 0) {
         this.madeCastCallTrueFalse++
         if (type == "movie") {
@@ -64,6 +65,8 @@ export default {
 
 
     }
+
+
   },
   mounted() {
 
@@ -78,64 +81,33 @@ export default {
 
   <li class="card" @mouseover="hovered = true, getCast()" @mouseleave="hovered = false">
     <template v-if="hovered == false">
-      <img v-if="image == null" class="placeholder" :src="'src/assets/image-solid.svg'" alt="" srcset="">
+      <img v-if="image == null" class="placeholderImage" :src="'src/assets/image-solid.svg'" alt="" srcset="">
       <img v-else class="cardImage" :src="'https://image.tmdb.org/t/p/w342' + image" alt="" srcset="">
     </template>
 
     <template v-if="hovered == true">
       <div class="cardInfo">
-        <h5 class="marginBottom">Titolo: {{ truncate(title,20) }}</h5>
-        <h5 class="marginBottom">Titolo originale: {{ truncate(original_title,10) }}</h5>
-        <div class="language marginBottom flex">
-          <p class="marginRight">Lingua:</p>
+        <p class="mb-0 title">Titolo: {{ truncate(title, 20) }}</p>
+        <p class="mb-0 title">Titolo originale: {{ truncate(original_title, 10) }}</p>
+        <div class="language  flex">
+          <p class="marginRight mb-0">Lingua:</p>
           <img
             v-if="original_language == 'it' | original_language == 'en' | original_language == 'de' | original_language == 'es' | original_language == 'fr'"
             class="flag" :src="'src/assets/' + original_language + '.png'" alt="" srcset="">
           <p v-else class="marginBottom">{{ original_language.toUpperCase() }}</p>
         </div>
-        <div class="rating flex">
-          <p class="marginRight">Voto:</p>
+        <div class="rating flex mb-0">
+          <p class="marginRight mb-0">Voto:</p>
           <template v-for="i in 5" :key="i">
             <img class="starIcon" v-if="i <= setStars" :src="'src/assets/star.png'" alt="" srcset="">
             <img class="starIcon" v-else :src="'src/assets/emptyStar.png'" alt="">
           </template>
         </div>
-        <div>
-          <p>Genere: </p>
-          <template v-for="genre in genre_ids">
-            <span v-if="genre == 18">Drama</span>
-            <span v-else-if="genre == 12"> Adventure</span>
-            <span v-else-if="genre == 14"> Fantasy</span>
-            <span v-else-if="genre == 16"> Animation</span>
-            <span v-else-if="genre == 27"> Horror</span>
-            <span v-else-if="genre == 28"> Action</span>
-            <span v-else-if="genre == 35"> Comedy</span>
-            <span v-else-if="genre == 36"> History</span>
-            <span v-else-if="genre == 37"> Western</span>
-            <span v-else-if="genre == 53"> Thriller</span>
-            <span v-else-if="genre == 80"> Crime</span>
-            <span v-else-if="genre == 99"> Documentary</span>
-            <span v-else-if="genre == 878"> Science Fiction</span>
-            <span v-else-if="genre == 9648"> Mystery</span>
-            <span v-else-if="genre == 10402"> Music</span>
-            <span v-else-if="genre == 10749"> Romance</span>
-            <span v-else-if="genre == 10751"> Family</span>
-            <span v-else-if="genre == 10759"> Action & Adventure</span>
-            <span v-else-if="genre == 10762"> Kids</span>
-            <span v-else-if="genre == 10763"> News</span>
-            <span v-else-if="genre == 10764"> Reality</span>
-            <span v-else-if="genre == 10765"> Sci-Fi & Fantasy</span>
-            <span v-else-if="genre == 10766"> Soaspan</span>
-            <span v-else-if="genre == 10767"> Talk</span>
-            <span v-else-if="genre == 10768"> War & spanolitics</span>
-            <span v-else-if="genre == 10770"> TV Movie</span>
-          </template>
-        </div>
-        <p>Cast:</p>
+        <p class="mb-0">Cast:</p>
         <template v-for="actor in computedArray">
           <span>{{ actor.name }}</span>
         </template>
-        <p>Overview:</p>
+        <p class="mb-0">Overview:</p>
         <span>{{ truncate(overview, 30) }}</span>
 
 
@@ -170,7 +142,7 @@ export default {
   padding: 10px;
 }
 
-.placeholder {
+.placeholderImage {
   width: 200px;
   padding-top: 60px;
 
@@ -197,7 +169,11 @@ p {
   margin-right: 5px;
 }
 
-span{
+span {
   font-size: 13px;
+}
+
+.title{
+  font-size: 15;
 }
 </style>

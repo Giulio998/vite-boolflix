@@ -2,10 +2,12 @@
 import AppHeader from './components/AppHeader.vue'
 import { store } from "../store.js"
 import AppCard from './components/AppCard.vue';
+import AppOffCanvas from './components/AppOffCanvas.vue'
 export default {
   components: {
     AppCard,
     AppHeader,
+    AppOffCanvas,
   },
   data() {
     return {
@@ -24,6 +26,7 @@ export default {
   </header>
 
   <main>
+    <AppOffCanvas/>
     <div class="mainContainer">
       <template v-if="store.movies.length > 0">
         <h1 class="marginBottom paddingTop">Film</h1>

@@ -1,53 +1,17 @@
 <script>
 import { store } from "../../store.js"
 import axios from "axios"
+import {getTitle} from "../Api.js"
 export default {
     data() {
         return {
-            store
+            store,
+            getTitle
+            
         }
     },
     methods: {
-        getTitle() {
-            store.movies = []
-            axios.get(store.movieEndPoint + store.query + "&api_key=" + store.api_key).then((res) => {
-                res.data.results.forEach(element => {
-                    const newMovie = {
-                        id: element.id,
-                        title: element.title,
-                        original_title: element.original_title,
-                        original_language: element.original_language,
-                        vote: element.vote_average,
-                        image: element.poster_path,
-                        overview: element.overview,
-                        type: "movie",
-                        genre_ids: element.genre_ids,
-                    }
-                    store.movies.push(newMovie)
-                });
-                console.log(store.movies);
-
-            })
-            store.tvs = []
-            axios.get(store.tvEndPoint + store.query + "&api_key=" + store.api_key).then((res) => {
-                res.data.results.forEach(element => {
-                    const newTv = {
-                        id: element.id,
-                        title: element.name,
-                        original_title: element.original_name,
-                        original_language: element.original_language,
-                        vote: element.vote_average,
-                        image: element.poster_path,
-                        overview: element.overview,
-                        type: "tv",
-                        genre_ids: element.genre_ids,
-
-
-                    }
-                    store.tvs.push(newTv)
-                });
-            })
-        },
+        
     }
 }
 
@@ -63,9 +27,11 @@ export default {
             <p>SerieTv</p>
             <p>Film</p>
         </div>
-        <div id="queryInput">
-            <input v-model="store.query" type="text">
-            <button @click="getTitle()">Search</button>
+        <div id="queryInput" class="flex">
+            <button class="btn btn-outline-light me-2" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Filter</button>
+            <input class="form-control" v-model="store.query" type="text" @keyup.enter="getTitle()">
+            <button class="btn btn-outline-light ms-2" @click="getTitle()">Search</button>
         </div>
 
     </div>
@@ -93,12 +59,6 @@ p {
     width: 400px;
 }
 
-button {
-    background-color: inherit;
-    border-color: white;
-    color: white;
-    padding: 4px;
-}
 
 input {
     padding: 4px;

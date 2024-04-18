@@ -8,6 +8,14 @@ export const store = reactive({
         movieEndPoint: `https://api.themoviedb.org/3/search/movie?query=`,
         tvEndPoint: `https://api.themoviedb.org/3/search/tv?query=`,
         movieCastEndPoint: `https://api.themoviedb.org/3/movie/`,
+        movieGenreEndPoint: `https://api.themoviedb.org/3/genre/movie/list`,
+        tvGenreEndPoint: `https://api.themoviedb.org/3/genre/tv/list`,
+        movieGenreArray: [],
+        tvGenreArray: [],
+        filter: {
+                movieGenre: "",
+                tvGenre: "",
+        },
         movieCast: [],
         tvCast: [],
 
