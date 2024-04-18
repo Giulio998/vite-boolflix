@@ -7,5 +7,9 @@ export const store = reactive({
         query: "",
         movieEndPoint: `https://api.themoviedb.org/3/search/movie?query=`,
         tvEndPoint: `https://api.themoviedb.org/3/search/tv?query=`,
+        movieCastEndPoint: `https://api.themoviedb.org/3/movie/`,
+        movieCast: [],
+        tvCast: [],
+
 
 });

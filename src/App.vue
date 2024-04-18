@@ -29,17 +29,17 @@ export default {
         <h1 class="marginBottom paddingTop">Film</h1>
         <ul class="flex overflow nowrap cardContainer">
           <template v-for="(movie, index) in store.movies">
-            <AppCard :title="movie.title" :original_title="movie.original_title " :overview="movie.overview"
-              :original_language="movie.original_language" :vote="movie.vote_average" :image="movie.poster_path" />
+            <AppCard :title="movie.title" :original_title="movie.original_title " :overview="movie.overview" :id="movie.id"
+              :original_language="movie.original_language" :vote="movie.vote" :image="movie.image" :cast="store.movieCast" :type="movie.type" :genre_ids="movie.genre_ids"  />
           </template>
         </ul>
       </template>
       <template v-if="store.tvs.length > 0">
         <h1 class="marginBottom marginTop">Serie tv</h1>
         <ul class="flex overflow nowrap cardContainer">
-          <template v-for="(tv, index) in store.tvs">
-            <AppCard :title="tv.name" :original_title="tv.original_name" :original_language="tv.original_language" :overview="tv.overview"
-              :vote="tv.vote_average" :image="tv.poster_path" />
+          <template v-for="tv in store.tvs">
+            <AppCard :title="tv.name" :original_title="tv.original_name" :original_language="tv.original_language" :overview="tv.overview" :id="tv.id"
+              :vote="tv.vote" :image="tv.image" :cast="store.tvCast" :type="tv.type"  :genre_ids="tv.genre_ids"/>
           </template>
         </ul>
 
