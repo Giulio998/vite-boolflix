@@ -38,7 +38,7 @@ export default {
         <h1 class="marginBottom marginTop">Serie tv</h1>
         <ul class="flex overflow nowrap cardContainer">
           <template v-for="tv in store.tvs">
-            <AppCard :title="tv.name" :original_title="tv.original_name" :original_language="tv.original_language" :overview="tv.overview" :id="tv.id"
+            <AppCard :title="tv.title" :original_title="tv.original_title" :original_language="tv.original_language" :overview="tv.overview" :id="tv.id"
               :vote="tv.vote" :image="tv.image" :cast="store.tvCast" :type="tv.type"  :genre_ids="tv.genre_ids"/>
           </template>
         </ul>

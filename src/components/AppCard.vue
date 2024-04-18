@@ -84,8 +84,8 @@ export default {
 
     <template v-if="hovered == true">
       <div class="cardInfo">
-        <h5 class="marginBottom">Titolo: {{ title }}</h5>
-        <h5 class="marginBottom">Titolo originale: {{ original_title }}</h5>
+        <h5 class="marginBottom">Titolo: {{ truncate(title,20) }}</h5>
+        <h5 class="marginBottom">Titolo originale: {{ truncate(original_title,10) }}</h5>
         <div class="language marginBottom flex">
           <p class="marginRight">Lingua:</p>
           <img
@@ -102,7 +102,7 @@ export default {
         </div>
         <div>
           <p>Genere: </p>
-          <template v-for="genre in genre_ids" :key="index">
+          <template v-for="genre in genre_ids">
             <span v-if="genre == 18">Drama</span>
             <span v-else-if="genre == 12"> Adventure</span>
             <span v-else-if="genre == 14"> Fantasy</span>
@@ -136,7 +136,7 @@ export default {
           <span>{{ actor.name }}</span>
         </template>
         <p>Overview:</p>
-        <span>{{ truncate(overview, 40) }}</span>
+        <span>{{ truncate(overview, 30) }}</span>
 
 
       </div>
