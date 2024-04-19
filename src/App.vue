@@ -27,9 +27,9 @@ export default {
 
   <main>
     <AppOffCanvas/>
-    <div class="mainContainer">
+    <div class="mainContainer p-4">
       <template v-if="store.movies.length > 0">
-        <h1 class="marginBottom paddingTop">Film</h1>
+        <h1 class="mb-3 ms-1">Film</h1>
         <ul class="flex overflow nowrap cardContainer">
           <template v-for="(movie, index) in store.movies">
             <AppCard :title="movie.title" :original_title="movie.original_title " :overview="movie.overview" :id="movie.id"
@@ -38,7 +38,7 @@ export default {
         </ul>
       </template>
       <template v-if="store.tvs.length > 0">
-        <h1 class="marginBottom marginTop">Serie tv</h1>
+        <h1 class="mb-3 ms-1">Serie tv</h1>
         <ul class="flex overflow nowrap cardContainer">
           <template v-for="tv in store.tvs">
             <AppCard :title="tv.title" :original_title="tv.original_title" :original_language="tv.original_language" :overview="tv.overview" :id="tv.id"
@@ -73,18 +73,7 @@ export default {
 
 h1{
   color: white;
-  padding-left: 15px;
+  
 }
 
-.marginBottom{
-  margin-bottom: 10px;
-}
-
-.marginTop{
-  margin-top: 10px;
-}
-
-.paddingTop{
-  padding-top: 10px;
-}
 </style>

@@ -27,3 +27,15 @@
     flex-wrap: nowrap;
 }
 
+.overflow::-webkit-scrollbar {
+    height: 10px;
+}
+
+.overflow::-webkit-scrollbar-thumb {
+    background: rgb(145, 145, 144); 
+    border-radius: 5px;
+  }
+
+
+.overflow {
+   } 

@@ -36,7 +36,6 @@ export default {
       return this.limit ? this.cast.slice(0, this.limit) : this.cast;
     },
 
-
   },
   methods: {
     truncate(str, maxlength) {
@@ -45,26 +44,21 @@ export default {
     getCast(id, type) {
       id = this.id;
       type = this.type;
-
       if (this.madeCastCallTrueFalse == 0) {
         this.madeCastCallTrueFalse++
         if (type == "movie") {
           store.movieCast = []
           axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=221ddfa5fda3be6026dfe32e023f2d36`).then((res) => {
             store.movieCast = res.data.cast
-
           })
         }
         if (type == "tv") {
           store.tvCast = []
           axios.get(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=221ddfa5fda3be6026dfe32e023f2d36`).then((res) => {
             store.tvCast = res.data.cast
-
           })
         }
       }
-
-
     },
     getGenre(genre_ids, type) {
       type = this.type;
@@ -92,23 +86,15 @@ export default {
             });
           });
       }
-
     }
-
-
   },
-  mounted() {
-
-  },
-
-
 };
 
 </script>
 
 <template>
 
-  <li class="card" @mouseover="hovered = true, getCast(), getGenre()" @mouseleave="hovered = false">
+  <li class="card overflowHidden" @mouseover="hovered = true, getCast(), getGenre()" @mouseleave="hovered = false">
     <template v-if="hovered == false">
       <img v-if="image == null" class="placeholderImage" :src="'src/assets/image-solid.svg'" alt="" srcset="">
       <img v-else class="cardImage" :src="'https://image.tmdb.org/t/p/w342' + image" alt="" srcset="">
@@ -123,30 +109,28 @@ export default {
           <img
             v-if="original_language == 'it' | original_language == 'en' | original_language == 'de' | original_language == 'es' | original_language == 'fr'"
             class="flag" :src="'src/assets/' + original_language + '.png'" alt="" srcset="">
-          <p v-else class="marginBottom">{{ original_language.toUpperCase() }}</p>
+          <span v-else class="mb-0">{{ original_language.toUpperCase() }}</span>
         </div>
         <div class="genre">
-          <p class="marginRight mb-0">Genere:</p>
+          <span class="marginRight mb-0">Genere:</span>
           <template v-for="genreNames in store.genreNames">
             <span class="me-1">{{ genreNames }}</span>
           </template>
 
         </div>
         <div class="rating flex mb-0">
-          <p class="marginRight mb-0">Voto:</p>
+          <span class="marginRight mb-0">Voto:</span>
           <template v-for="i in 5" :key="i">
             <img class="starIcon" v-if="i <= setStars" :src="'src/assets/star.png'" alt="" srcset="">
             <img class="starIcon" v-else :src="'src/assets/emptyStar.png'" alt="">
           </template>
         </div>
-        <p class="mb-0">Cast:</p>
+        <span class="mb-0">Cast:</span>
         <template v-for="actor in computedArray">
           <span>{{ actor.name }}</span>
         </template>
-        <p class="mb-0">Overview:</p>
-        <span>{{ truncate(overview, 30) }}</span>
-
-
+        <span class="mb-0">Overview:</span>
+        <span>{{ truncate(overview, 40) }}</span>
       </div>
     </template>
 
@@ -184,9 +168,12 @@ export default {
 
 
 }
+.overflowHidden{
+    overflow: hidden;
+}
 
 .starIcon {
-  height: 20px;
+  height: 13px;
 }
 
 li {
@@ -194,7 +181,7 @@ li {
 }
 
 p {
-  font-size: 13px;
+  font-size: 11px;
 }
 
 .marginBottom {
@@ -206,10 +193,11 @@ p {
 }
 
 span {
-  font-size: 13px;
+  font-size: 11px;
 }
 
 .title {
-  font-size: 15;
+  font-size: 13px;
 }
+
 </style>
