@@ -1,7 +1,7 @@
 <script>
 import axios from "axios"
 import { store } from "../../store.js"
-
+import { itTexts } from "../i18n/it.js"
 export default {
   props: {
     title: String,
@@ -11,7 +11,6 @@ export default {
     image: String,
     overview: String,
     id: Number,
-    cast: Array,
     type: String,
     genre_ids: Array,
 
@@ -21,8 +20,8 @@ export default {
       store,
       hovered: false,
       limit: 5,
-      madeCastCallTrueFalse: 0,
-      madeGenreCallTrueFalse: 0,
+      itTexts,
+
 
     }
   },
@@ -33,7 +32,7 @@ export default {
     },
 
     computedArray() {
-      return this.limit ? this.cast.slice(0, this.limit) : this.cast;
+      return this.limit ? store.movieCast.slice(0, this.limit) : store.movieCast;
     },
 
   },
@@ -44,27 +43,29 @@ export default {
     getCast(id, type) {
       id = this.id;
       type = this.type;
-      if (this.madeCastCallTrueFalse == 0) {
-        this.madeCastCallTrueFalse++
-        if (type == "movie") {
-          store.movieCast = []
-          axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=221ddfa5fda3be6026dfe32e023f2d36`).then((res) => {
-            store.movieCast = res.data.cast
-          })
-        }
-        if (type == "tv") {
-          store.tvCast = []
-          axios.get(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=221ddfa5fda3be6026dfe32e023f2d36`).then((res) => {
-            store.tvCast = res.data.cast
-          })
-        }
+      if (type == "movie" && store.hoveredId != id) {
+        store.movieCast = []
+        axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=221ddfa5fda3be6026dfe32e023f2d36`).then((res) => {
+          store.movieCast = res.data.cast
+          store.hoveredId = id
+
+
+        })
       }
+      if (type == "tv" && store.hoveredId != id) {
+        store.tvCast = []
+        axios.get(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=221ddfa5fda3be6026dfe32e023f2d36`).then((res) => {
+          store.tvCast = res.data.cast
+          store.hoveredId = id
+        })
+      }
+
     },
-    getGenre(genre_ids, type) {
+    getGenre(genre_ids, type, id) {
+      id = this.id
       type = this.type;
       genre_ids = this.genre_ids
-      if (this.madeGenreCallTrueFalse == 0 && type == "movie") {
-        this.madeGenreCallTrueFalse++
+      if ( type == "movie" && store.hoveredId != id) {
         store.genreNames = [],
           genre_ids.forEach(element => {
             store.movieGenreArray.forEach(genre => {
@@ -75,8 +76,7 @@ export default {
           });
       }
 
-      if (this.madeGenreCallTrueFalse == 0 && type == "tv") {
-        this.madeGenreCallTrueFalse++
+      if (type == "tv" && store.hoveredId != id) {
         store.genreNames = [],
           genre_ids.forEach(element => {
             store.tvGenreArray.forEach(genre => {
@@ -102,35 +102,38 @@ export default {
 
     <template v-if="hovered == true">
       <div class="cardInfo">
-        <p class="mb-0 title">Titolo: {{ truncate(title, 20) }}</p>
-        <p class="mb-0 title">Titolo originale: {{ truncate(original_title, 10) }}</p>
+        <p class="mb-0 title">{{ itTexts.card.title }} : {{ truncate(title, 20) }}</p>
+        <p class="mb-0 title">{{ itTexts.card.original_title }} : {{ truncate(original_title, 10) }}</p>
         <div class="language  flex">
-          <p class="marginRight mb-0">Lingua:</p>
+          <p class="marginRight mb-0">{{ itTexts.card.language }} :</p>
           <img
             v-if="original_language == 'it' | original_language == 'en' | original_language == 'de' | original_language == 'es' | original_language == 'fr'"
             class="flag" :src="'src/assets/' + original_language + '.png'" alt="" srcset="">
           <span v-else class="mb-0">{{ original_language.toUpperCase() }}</span>
         </div>
         <div class="genre">
-          <span class="marginRight mb-0">Genere:</span>
+          <span class="marginRight mb-0">{{ itTexts.card.genre }} :</span>
           <template v-for="genreNames in store.genreNames">
             <span class="me-1">{{ genreNames }}</span>
           </template>
 
         </div>
         <div class="rating flex mb-0">
-          <span class="marginRight mb-0">Voto:</span>
+          <span class="marginRight mb-0">{{ itTexts.card.vote }} :</span>
           <template v-for="i in 5" :key="i">
             <img class="starIcon" v-if="i <= setStars" :src="'src/assets/star.png'" alt="" srcset="">
             <img class="starIcon" v-else :src="'src/assets/emptyStar.png'" alt="">
           </template>
         </div>
-        <span class="mb-0">Cast:</span>
+        <span class="mb-0">{{ itTexts.card.cast }}: </span>
         <template v-for="actor in computedArray">
           <span>{{ actor.name }}</span>
         </template>
-        <span class="mb-0">Overview:</span>
-        <span>{{ truncate(overview, 40) }}</span>
+        <div>
+          <span class="mb-0"> {{ itTexts.card.overview }}: </span>
+          <span>{{ truncate(overview, 40) }}</span>
+        </div>
+
       </div>
     </template>
 
@@ -168,8 +171,9 @@ export default {
 
 
 }
-.overflowHidden{
-    overflow: hidden;
+
+.overflowHidden {
+  overflow: hidden;
 }
 
 .starIcon {
@@ -199,5 +203,4 @@ span {
 .title {
   font-size: 13px;
 }
-
 </style>

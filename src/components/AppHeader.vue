@@ -1,12 +1,13 @@
 <script>
 import { store } from "../../store.js"
-import axios from "axios"
+import { itTexts } from "../i18n/it.js"
 import {getTitle} from "../Api.js"
 export default {
     data() {
         return {
             store,
-            getTitle
+            getTitle,
+            itTexts,
             
         }
     },
@@ -23,15 +24,15 @@ export default {
     <div class="navBar flex align-items-center space-between">
         <div class="flex align-items-center space-between links">
             <h1>BOOLFLIX</h1>
-            <p class="mb-0">Home</p>
-            <p class="mb-0">SerieTv</p>
-            <p class="mb-0">Film</p>
+            <p class="mb-0">{{ itTexts.header.home }}</p>
+            <p class="mb-0">{{ itTexts.header.movie }}</p>
+            <p class="mb-0">{{ itTexts.header.tvSeries }}</p>
         </div>
         <div id="queryInput" class="flex">
             <button class="btn btn-outline-light me-2" data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Filter</button>
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">{{ itTexts.ui.filters }}</button>
             <input class="form-control" v-model="store.query" type="text" @keyup.enter="getTitle()">
-            <button class="btn btn-outline-light ms-2" @click="getTitle()">Search</button>
+            <button class="btn btn-outline-light ms-2" @click="getTitle()">{{ itTexts.ui.search }}</button>
         </div>
 
     </div>

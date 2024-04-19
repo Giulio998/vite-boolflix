@@ -33,7 +33,7 @@ export default {
         <ul class="flex overflow nowrap cardContainer">
           <template v-for="(movie, index) in store.movies">
             <AppCard :title="movie.title" :original_title="movie.original_title " :overview="movie.overview" :id="movie.id"
-              :original_language="movie.original_language" :vote="movie.vote" :image="movie.image" :cast="store.movieCast" :type="movie.type" :genre_ids="movie.genre_ids"  />
+              :original_language="movie.original_language" :vote="movie.vote" :image="movie.image"  :type="movie.type" :genre_ids="movie.genre_ids"  />
           </template>
         </ul>
       </template>
@@ -42,7 +42,7 @@ export default {
         <ul class="flex overflow nowrap cardContainer">
           <template v-for="tv in store.tvs">
             <AppCard :title="tv.title" :original_title="tv.original_title" :original_language="tv.original_language" :overview="tv.overview" :id="tv.id"
-              :vote="tv.vote" :image="tv.image" :cast="store.tvCast" :type="tv.type"  :genre_ids="tv.genre_ids"/>
+              :vote="tv.vote" :image="tv.image"  :type="tv.type"  :genre_ids="tv.genre_ids"/>
           </template>
         </ul>
 

@@ -19,6 +19,7 @@ export const store = reactive({
         movieCast: [],
         tvCast: [],
         genreNames: [],
+        hoveredId: 0,
 
 
 });
