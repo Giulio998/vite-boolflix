@@ -71,6 +71,7 @@ export default {
             store.movieGenreArray.forEach(genre => {
               if (element == genre.id) {
                 store.genreNames.push(genre.name)
+                store.hoveredId = id
               }
             });
           });
@@ -82,6 +83,7 @@ export default {
             store.tvGenreArray.forEach(genre => {
               if (element == genre.id) {
                 store.genreNames.push(genre.name)
+                store.hoveredId = id
               }
             });
           });
