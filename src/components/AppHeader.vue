@@ -23,9 +23,9 @@ export default {
     <div class="navBar flex align-items-center space-between">
         <div class="flex align-items-center space-between links">
             <h1>BOOLFLIX</h1>
-            <p>Home</p>
-            <p>SerieTv</p>
-            <p>Film</p>
+            <p class="mb-0">Home</p>
+            <p class="mb-0">SerieTv</p>
+            <p class="mb-0">Film</p>
         </div>
         <div id="queryInput" class="flex">
             <button class="btn btn-outline-light me-2" data-bs-toggle="offcanvas"

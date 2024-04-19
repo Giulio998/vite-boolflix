@@ -22,7 +22,8 @@ export default {
       hovered: false,
       limit: 5,
       madeCastCallTrueFalse: 0,
-      
+      madeGenreCallTrueFalse: 0,
+
     }
   },
   computed: {
@@ -42,9 +43,9 @@ export default {
       return (str.length > maxlength) ? str.slice(0, maxlength - 1) + '…' : str;
     },
     getCast(id, type) {
-      id= this.id;
-      type= this.type;
-      
+      id = this.id;
+      type = this.type;
+
       if (this.madeCastCallTrueFalse == 0) {
         this.madeCastCallTrueFalse++
         if (type == "movie") {
@@ -64,6 +65,34 @@ export default {
       }
 
 
+    },
+    getGenre(genre_ids, type) {
+      type = this.type;
+      genre_ids = this.genre_ids
+      if (this.madeGenreCallTrueFalse == 0 && type == "movie") {
+        this.madeGenreCallTrueFalse++
+        store.genreNames = [],
+          genre_ids.forEach(element => {
+            store.movieGenreArray.forEach(genre => {
+              if (element == genre.id) {
+                store.genreNames.push(genre.name)
+              }
+            });
+          });
+      }
+
+      if (this.madeGenreCallTrueFalse == 0 && type == "tv") {
+        this.madeGenreCallTrueFalse++
+        store.genreNames = [],
+          genre_ids.forEach(element => {
+            store.tvGenreArray.forEach(genre => {
+              if (element == genre.id) {
+                store.genreNames.push(genre.name)
+              }
+            });
+          });
+      }
+
     }
 
 
@@ -79,7 +108,7 @@ export default {
 
 <template>
 
-  <li class="card" @mouseover="hovered = true, getCast()" @mouseleave="hovered = false">
+  <li class="card" @mouseover="hovered = true, getCast(), getGenre()" @mouseleave="hovered = false">
     <template v-if="hovered == false">
       <img v-if="image == null" class="placeholderImage" :src="'src/assets/image-solid.svg'" alt="" srcset="">
       <img v-else class="cardImage" :src="'https://image.tmdb.org/t/p/w342' + image" alt="" srcset="">
@@ -95,6 +124,13 @@ export default {
             v-if="original_language == 'it' | original_language == 'en' | original_language == 'de' | original_language == 'es' | original_language == 'fr'"
             class="flag" :src="'src/assets/' + original_language + '.png'" alt="" srcset="">
           <p v-else class="marginBottom">{{ original_language.toUpperCase() }}</p>
+        </div>
+        <div class="genre">
+          <p class="marginRight mb-0">Genere:</p>
+          <template v-for="genreNames in store.genreNames">
+            <span class="me-1">{{ genreNames }}</span>
+          </template>
+
         </div>
         <div class="rating flex mb-0">
           <p class="marginRight mb-0">Voto:</p>
@@ -173,7 +209,7 @@ span {
   font-size: 13px;
 }
 
-.title{
+.title {
   font-size: 15;
 }
 </style>

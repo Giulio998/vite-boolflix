@@ -18,6 +18,7 @@ export const store = reactive({
         },
         movieCast: [],
         tvCast: [],
+        genreNames: [],
 
 
 });
